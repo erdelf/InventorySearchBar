@@ -38,7 +38,7 @@ jobs:
           plugin_id: 111
           internal_name: "InventorySearchBar"
           version_number: ${{ github.ref_name }}
-          path: "InventorySearchBar/bin/x64/Release/InventorySearchBar/latest.zip"
+          path: "InventorySearchBar/bin/Release/InventorySearchBar/latest.zip"
           type: "latest"
           dalamud_version: "14"
           changelog: ${{ github.event.release.body }}
@@ -47,7 +47,7 @@ jobs:
 
       - name: 'Upload to GitHub release'
         run: |
-            gh release upload ${{github.event.release.tag_name}} InventorySearchBar/bin/x64/Release/InventorySearchBar/latest.zip
+            gh release upload ${{github.event.release.tag_name}} InventorySearchBar/bin/Release/InventorySearchBar/latest.zip
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
