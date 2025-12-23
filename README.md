@@ -1,17 +1,20 @@
-> [!IMPORTANT]  
-> THIS PLUGIN IS NO LONGER MAINTAINED !!!
-> As a replacement you can try the "Vanilla Plus" plugin by [MidoriKami](https://github.com/MidoriKami)
-> which provides similar functionalities.
 
 # Inventory Search Bar Plugin
 
 A Final Fantasy XIV Dalamud Plugin that adds a search bar to the inventory windows to filter items.
 
+## Installation
+
+Add `https://puni.sh/api/repository/erdelf` to your plugin repositories and then search for `Inventory Searchbar` in the Plugin Installer to install.
+
+Settings can be accessed via the Plugin Installer or using the chat command `/isb`.
+
+
 ## Usage
 
 Use search bar located at the top of the inventory window to filter your items.
 
-![example](https://github.com/Tischel/InventorySearchBar/blob/master/Images/example_1.gif)
+![example](https://github.com/erdelf/InventorySearchBar/blob/master/Images/example_1.gif)
 
 ## Filters
 
