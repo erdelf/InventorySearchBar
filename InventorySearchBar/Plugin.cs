@@ -25,18 +25,19 @@ namespace InventorySearchBar
 {
     public class Plugin : IDalamudPlugin
     {
-        public static IClientState ClientState { get; private set; } = null!;
-        public static ICommandManager CommandManager { get; private set; } = null!;
-        public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
-        public static IFramework Framework { get; private set; } = null!;
-        public static IGameGui GameGui { get; private set; } = null!;
-        public static IUiBuilder UiBuilder { get; private set; } = null!;
-        public static IDataManager DataManager { get; private set; } = null!;
-        public static IKeyState KeyState { get; private set; } = null!;
-        public static IPluginLog Logger { get; private set; } = null!;
-        public static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
-        public static ICondition Condition { get; private set; } = null!;
-        public static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
+        public static IClientState            ClientState         { get; private set; } = null!;
+        public static ICommandManager         CommandManager      { get; private set; } = null!;
+        public static IDalamudPluginInterface PluginInterface     { get; private set; } = null!;
+        public static IFramework              Framework           { get; private set; } = null!;
+        public static IGameGui                GameGui             { get; private set; } = null!;
+        public static IUiBuilder              UiBuilder           { get; private set; } = null!;
+        public static IDataManager            DataManager         { get; private set; } = null!;
+        public static IKeyState               KeyState            { get; private set; } = null!;
+        public static IPluginLog              Logger              { get; private set; } = null!;
+        public static IGameInteropProvider    GameInteropProvider { get; private set; } = null!;
+        public static ICondition              Condition           { get; private set; } = null!;
+        public static IAddonLifecycle         AddonLifecycle      { get; private set; } = null!;
+        public        IObjectTable            ObjectTable         { get; }
 
         public static string AssemblyLocation { get; private set; } = "";
         public string Name => "InventorySearchBar";
@@ -87,21 +88,23 @@ namespace InventorySearchBar
             IPluginLog logger,
             IGameInteropProvider gameInteropProvider,
             ICondition condition,
-            IAddonLifecycle addonLifecycle
+            IAddonLifecycle addonLifecycle,
+            IObjectTable objectTable
         )
         {
-            ClientState = clientState;
-            CommandManager = commandManager;
-            PluginInterface = pluginInterface;
-            Framework = framework;
-            DataManager = dataManager;
-            GameGui = gameGui;
-            UiBuilder = pluginInterface.UiBuilder;
-            KeyState = keyState;
-            Logger = logger;
+            ClientState         = clientState;
+            CommandManager      = commandManager;
+            PluginInterface     = pluginInterface;
+            Framework           = framework;
+            DataManager         = dataManager;
+            GameGui             = gameGui;
+            UiBuilder           = pluginInterface.UiBuilder;
+            KeyState            = keyState;
+            Logger              = logger;
             GameInteropProvider = gameInteropProvider;
-            Condition = condition;
-            AddonLifecycle = addonLifecycle;
+            Condition           = condition;
+            AddonLifecycle      = addonLifecycle;
+            ObjectTable         = objectTable;
 
             KeyboardHelper.Initialize();
 
@@ -122,7 +125,7 @@ namespace InventorySearchBar
                 AssemblyLocation = Assembly.GetExecutingAssembly().Location;
             }
 
-            Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.8.0.0";
+            Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0.0";
 
             Framework.Update += Update;
             UiBuilder.Draw += Draw;
@@ -237,7 +240,7 @@ namespace InventorySearchBar
 
         private unsafe void Update(IFramework framework)
         {
-            if (Settings == null || ClientState.LocalPlayer == null || _manager == null) return;
+            if (Settings == null || ObjectTable.LocalPlayer == null || _manager == null) return;
 
             if (!_libLoaded)
             {
@@ -256,7 +259,7 @@ namespace InventorySearchBar
 
         private unsafe void Draw()
         {
-            if (Settings == null || ClientState.LocalPlayer == null || _manager == null) return;
+            if (Settings == null || ObjectTable.LocalPlayer == null || _manager == null) return;
 
             if (_manager.ActiveInventory == null)
             {
